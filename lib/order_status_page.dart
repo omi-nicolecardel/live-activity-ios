@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:live_activities/live_activities.dart';
 import 'package:live_activity_app/model/order_tracker_model.dart';
@@ -71,11 +73,10 @@ class _OrderStatusPageState extends State<OrderStatusPage> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               margin: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                color: const Color(0xFFf4f1fa),
-                border: Border.all(color: Colors.deepPurple),
+                color: const Color(0xFFF4F8FF),
+                border: Border.all(color: const Color(0xFF0030FF)),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -86,63 +87,83 @@ class _OrderStatusPageState extends State<OrderStatusPage> {
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Stack(
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          orderTracker.status,
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.deepPurple),
-                        ),
-                        const SizedBox(height: 5),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.deepPurple),
-                            borderRadius: BorderRadius.circular(20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 25.0, top: 15, bottom: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                orderTracker.status,
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF0030FF)),
+                              ),
+                              const SizedBox(height: 5),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: const Color(0xFF0030FF)),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  time ?? '',
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF0030FF)),
+                                ),
+                              ),
+                              const SizedBox(height: 25),
+                              SizedBox(
+                                width: 170,
+                                child: LinearProgressIndicator(
+                                  backgroundColor: Color(0xFFE8EAEE),
+                                  minHeight: 10,
+                                  borderRadius: BorderRadius.circular(20),
+                                  value: orderTracker.progressValue,
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                          Color(0xFF0030FF)),
+                                ),
+                              )
+                            ],
                           ),
-                          child: Text(
-                            time ?? '',
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.deepPurple),
-                          ),
                         ),
-                        const SizedBox(height: 25),
-                        LinearProgressIndicator(
-                          backgroundColor: Colors.grey.shade400,
-                          minHeight: 10,
-                          borderRadius: BorderRadius.circular(20),
-                          value: orderTracker.progressValue,
-                          valueColor: const AlwaysStoppedAnimation<Color>(
-                              Colors.deepPurple),
-                        )
-                      ],
+                      ),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 15,
+                    bottom: 0,
+                    child: SvgPicture.asset(
+                      "assets/location-access.svg",
+                      width: 200,
+                      alignment: Alignment.bottomRight,
+                      allowDrawingOutsideViewBox: false,
                     ),
                   ),
-                  const SizedBox(width: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Image.asset(
-                      "assets/rider.png",
-                      width: 120,
-                      height: 120,
-                    ),
-                  )
                 ],
               ),
             ),
             const SizedBox(height: 40),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF4F8FF),
+                  foregroundColor: const Color(0xFF0030FF),
+                ),
                 onPressed: () {
                   setState(() {
                     updateOrderStatus(OrderTrackerModel(
@@ -154,6 +175,10 @@ class _OrderStatusPageState extends State<OrderStatusPage> {
                 },
                 child: const Text('Preparing order')),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF4F8FF),
+                  foregroundColor: const Color(0xFF0030FF),
+                ),
                 onPressed: () {
                   setState(() {
                     updateOrderStatus(OrderTrackerModel(
@@ -165,6 +190,10 @@ class _OrderStatusPageState extends State<OrderStatusPage> {
                 },
                 child: const Text('Ready to pick up')),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF4F8FF),
+                  foregroundColor: const Color(0xFF0030FF),
+                ),
                 onPressed: () {
                   setState(() {
                     updateOrderStatus(OrderTrackerModel(
@@ -176,6 +205,10 @@ class _OrderStatusPageState extends State<OrderStatusPage> {
                 },
                 child: const Text('On the way')),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF4F8FF),
+                  foregroundColor: const Color(0xFF0030FF),
+                ),
                 onPressed: () {
                   setState(() {
                     updateOrderStatus(OrderTrackerModel(
